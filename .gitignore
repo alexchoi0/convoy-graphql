@@ -1,0 +1,19 @@
+/target
+/.cache
+/.idea
+/.vscode
+.DS_Store
+.bsp
+# direnv
+.direnv
+.envrc
+.env
+.claude/
+
+# Node (if any tooling uses it)
+node_modules/
+
+*.snap.new
+flamegraph.svg
+perf.data
+perf.data.old

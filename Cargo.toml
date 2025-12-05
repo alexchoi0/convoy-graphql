@@ -1,0 +1,76 @@
+[package]
+name = "convoy-graphql"
+version = "0.1.0"
+edition = "2021"
+description = "A GraphQL runtime library with macro-based schema definition"
+license = "MIT OR Apache-2.0"
+
+[lib]
+name = "convoy_graphql"
+path = "src/lib.rs"
+
+[workspace.dependencies]
+anyhow = "1.0.82"
+async-graphql = { version = "=7.0.9" }
+async-graphql-value = "=7.0.9"
+axum = { version = "0.7", features = ["ws"] }
+futures = "0.3"
+futures-util = "0.3"
+indexmap = "2.2.6"
+tokio = { version = "1.37.0", features = ["rt", "time", "sync", "macros"] }
+tower-http = { version = "0.5", features = ["cors"] }
+serde_json = { version = "1.0.116", features = ["preserve_order"] }
+serde = { version = "1.0.200", features = ["derive"] }
+thiserror = "1.0.59"
+
+[dependencies]
+# Core dependencies
+tokio = { workspace = true, features = ["rt-multi-thread"] }
+anyhow = { workspace = true }
+thiserror = { workspace = true }
+serde_json = { workspace = true }
+serde = { workspace = true }
+indexmap = { workspace = true }
+
+# GraphQL
+async-graphql = { workspace = true, features = ["dynamic-schema"] }
+async-graphql-value = { workspace = true }
+
+# Web server
+axum = { workspace = true }
+tower-http = { workspace = true }
+futures = { workspace = true }
+futures-util = { workspace = true }
+
+# Macros
+convoy-graphql-macros = { path = "crates/macros" }
+
+[dev-dependencies]
+tokio-test = "0.4.4"
+tower = { version = "0.4", features = ["util"] }
+hyper = "1.0"
+http-body-util = "0.1"
+reqwest = { version = "0.12", features = ["json"] }
+tokio-tungstenite = "0.26"
+async-stream = "0.3"
+
+[features]
+default = []
+
+[workspace]
+members = [
+    ".",
+    "crates/macros",
+]
+
+[profile.release]
+opt-level = 3
+codegen-units = 1
+panic = 'abort'
+lto = 'fat'
+debug = false
+incremental = false
+overflow-checks = false
+
+[[example]]
+name = "schema_module"
